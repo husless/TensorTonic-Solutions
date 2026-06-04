@@ -51,10 +51,11 @@ __global__ void reduce_sq_sum(const float* input, float* sumv, int N) {
 
 __global__ void divide_by_sqrt(const float* input, float* output, const float* sumv, int N) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
 
     float norm_inv = rsqrtf(*sumv);
 
-    for(int i=; i<N; i += blockDim.x * gridDim.x) {
+    for(int i = idx; i < N; i += stride) {
         output[i] = input[i] * norm_inv;
     }
 }
