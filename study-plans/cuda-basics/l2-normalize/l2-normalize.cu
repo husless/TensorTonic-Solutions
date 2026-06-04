@@ -53,10 +53,8 @@ __global__ void divide_by_sqrt(const float* input, float* output, const float* s
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
 
     float norm_inv = rsqrtf(*sumv);
-    // Prevent division by zero if the sub-array sums to 0
-    //if (norm == 0.0f) norm = 1.0f; 
 
-    for(int i=threadIdx.x + blockIdx.x*blockDim.x; i<N; i += blockDim.x * gridDim.x) {
+    for(int i=; i<N; i += blockDim.x * gridDim.x) {
         output[i] = input[i] * norm_inv;
     }
 }
