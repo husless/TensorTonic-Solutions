@@ -59,7 +59,6 @@ template <int BLOCK_SIZE=256>
 class GPUReducer {
 private:
     const int threads_per_block = BLOCK_SIZE;
-    const int elements_per_block = threads_per_block; // 2048 elements
 
 public:
 
