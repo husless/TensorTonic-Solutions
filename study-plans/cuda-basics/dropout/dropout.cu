@@ -1,8 +1,6 @@
 #include <cuda_runtime.h>
 
-__global__ void dropout_kernel(const float* input, const float* mask, float* output, float p, int N) {
-    float scale = 1.0 / (1.0 - p);
-
+__global__ void dropout_kernel(const float* input, const float* mask, float* output, float scale, int N) {
     int idx = threadIdx.x + blockIdx.x * blockDim.x;
     int stride = blockDim.x * gridDim.x;
 
@@ -31,6 +29,8 @@ __global__ void dropout_kernel(const float* input, const float* mask, float* out
 extern "C" void solve(const float* input, const float* mask, float* output, float p, int N) {
     int threads = 256;
     int blocks = (N + threads - 1) / threads;
-    dropout_kernel<<<blocks, threads>>>(input, mask, output, p, N);
+
+    float scale = 1.0 / (1.0 - p);
+    dropout_kernel<<<blocks, threads>>>(input, mask, output, scale, N);
     cudaDeviceSynchronize();
 }
