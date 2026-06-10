@@ -1,6 +1,6 @@
 import numpy as np
 
-def elu(x, alpha):
+def elu(x: list[float], alpha: float) -> list[float]:
     """
     Apply ELU activation to each element.
     """
