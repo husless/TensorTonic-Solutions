@@ -1,14 +1,6 @@
 import numpy as np
 
 
-def norm_3d(v):
-    x = np.asarray(v)
-    if x.ndim == 1:
-        return np.sqrt(np.dot(x,x))
-
-    return np.sqrt(np.sum(x**2, axis=1, keepdims=True))
-
-
 def angle_between_3d(v, w):
     """
     Compute the angle (in radians) between two 3D vectors.
